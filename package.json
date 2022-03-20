@@ -4,6 +4,7 @@
   "description": "",
   "main": "app,js",
   "scripts": {
+    "dev": "nodemon ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,5 +12,10 @@
     "url": "water-api"
   },
   "author": "xinyi",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "koa": "^2.13.4",
+    "nodemon": "^2.0.15"
+  }
 }
