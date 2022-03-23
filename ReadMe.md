@@ -1,121 +1,32 @@
 ## 项目初始化
 
-### npm初始化
+教程来源：[【杰哥课堂】-项目实战-Node+Koa2从零搭建通用API服务_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV13A411w79h?p=3)
+源码：https://github.com/jj112358/node-api
 
-```
-npm init 
-```
+感谢UP
 
-生成`package.json`文件
+🐱🐱😘🍘🍙🦪🍚🥮🍥🫕🥧
 
-```
-{
-  "name": "api",
-  "version": "0.0.1",
-  "description": "",
-  "main": "app,js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "water-api"
-  },
-  "author": "xinyi",
-  "license": "MIT"
-}
-```
 
-- 记录项目的依赖
 
-### git初始化
+## 学习笔记1：
 
-```gi
-git init
-```
+#### 教程的作者已经写得很清晰了，在此不再进行赘述，更多的是梳理整个项目抽离的各个依赖之间的关系和逻辑
 
-git的本地仓库
+**对整个登录API的流程进行说明：**
 
-### ReadMe文件
+项目于暂时的目录如下：
 
-## 搭建项目
+![image-20220322214038203](C:\Users\aafz\AppData\Roaming\Typora\typora-user-images\image-20220322214038203.png)
 
-### 安装koa2框架
 
-```
-npm i koa
-```
 
-### 编写最基本的app.js
+做了一份依赖的思维导图
 
-```javascript
-const Koa = require('koa');
-const app = new Koa();
+文档链接：
 
-app.use(async ctx => {
-  ctx.body = 'Hello World';
-});
+![image-20220323151939768](C:\Users\aafz\AppData\Roaming\Typora\typora-user-images\image-20220323151939768.png)
 
-app.listen(3002,()=>{
-    console.log('3002 yeah');
-});
-```
+![image-20220323152031358](C:\Users\aafz\AppData\Roaming\Typora\typora-user-images\image-20220323152031358.png)
 
-## 开发优化
-
-### 自动保存重启
-
-下载 nodemon
-
-```
-npm i nodemon
-```
-
-修改 `package.json`
-
-```
-  "scripts": {
-      "dev":"nodemon ./src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-```
-
-### 读取配置文件
-
-在项目目录下写一个文件  `.env`
-
-```
-APP_PORT=3002
-```
-
-安装 dotenv
-
-```
-npm i dotenv
-//https://www.npmjs.com/package/dotenv
-```
-
-写一个读取配置的文件  `./src/config/config_default.js`
-
-```js
-const dotenv = require('dotenv');
-
-const result = dotenv.config()
-
-if (result.error) {
-  throw result.error
-}
-
-module.exports = result.parsed;
-```
-
-最后可以在  app.js 中导入上面这个文件导出的配置
-
-```js
-const {APP_PORT} = require('./config/config_default.js')
-//......
-app.listen(APP_PORT,()=>{
-    console.log(`running on ${APP_PORT}`);
-});
-```
-
+![image-20220323152054875](C:\Users\aafz\AppData\Roaming\Typora\typora-user-images\image-20220323152054875.png)

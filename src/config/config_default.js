@@ -11,8 +11,6 @@ if (result.error) {
   throw result.error
 }
 
-// console.log(result.parsed);
-// console.log(result.parsed.APP_PORT);
-// console.log(process.env.APP_PORT);
+// console.log(result);
 
 module.exports = result.parsed;
