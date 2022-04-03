@@ -1,60 +1,61 @@
 const { DataTypes } = require('sequelize');
 
 const seq = require('../db/seq');
+// const User = require('./user.model');
 
-const User = seq.define('User', {
+const Site = seq.define('Site', {
     // 在这里定义模型属性
-    tel: {
-        type: DataTypes.STRING(15),
+    id: {
+        type: DataTypes.INTEGER(20),
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         unique: true,//唯一约束
-        validate:{
-            isNumeric: true,          // 只允许数字
-            notNull: true,            // 不允许为空
-            len: [13,13],              // 仅允许长度在2到10之间的值
-        },//验证器
-        comment: '用户手机号代替id'
+        // validate:{
+        //     isNumeric: true,          // 只允许数字
+        //     notNull: true,            // 不允许为空
+        //     len: [13,13],              // 仅允许长度在2到10之间的值
+        // },//验证器
+        comment: '站点id'
     },
-    name:{
-        type:DataTypes.STRING(20),
+    name: {
+        type: DataTypes.STRING(40),
         allowNull: false,
-        comment:'用户名'
+        comment: '站点名称'
     },
-    sex:{
-        type:DataTypes.ENUM('男','女'),
+    status: {
+        type: DataTypes.ENUM('已启用', '未启用'),
         allowNull: false,
-        comment:'性别'
+        defaultValue: '未启用',
+        comment: '站点状态'
     },
-    wx:{
-        type:DataTypes.STRING(20),
+    address: {
+        type: DataTypes.STRING(100),
         allowNull: false,
-        comment:'微信号'
+        comment: '站点地址'
     },
-    type:{
-        type:DataTypes.ENUM('超级管理员','管理员','巡检人员','工单派发人员','测试人员','公司用户'),
-        allowNull: false,
-        comment:'人员类型'
+    type: {
+        type: DataTypes.ENUM('一体化泵站', '污水处理站点'),
+        comment: '站点类型'
     },
-    password: {
-        type: DataTypes.STRING(50),
+    message: {
+        type: DataTypes.DATE(6),
         allowNull: false,
-        comment: '密码'
+        comment: '站点上一次修改状态时间'
     }
 }, {
-    tableName: 'users',
+    tableName: 'sites',
     timestamps: false
-  }
+}
 );
-
-// User.sync({ force: true });
-// console.log("用户模型表刚刚(重新)创建！");
 
 //User.sync() //- 如果表不存在,则创建该表(如果已经存在,则不执行任何操作)
 
 // User.sync({ alter: true }) //- 这将检查数据库中表的当前状态(它具有哪些列,它们的数据类型等),然后在表中进行必要的更改以使其与模型匹配.
+// WO.sync({ force: true });
+console.log("site模型表刚刚(重新)创建！");
 
-module.exports = User;
+module.exports = Site;
 
 
 // // `sequelize.define` 会返回模型
