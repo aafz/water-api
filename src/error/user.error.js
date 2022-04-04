@@ -1,10 +1,5 @@
-class ET {  //ErrorType
-    constructor(code, message, result) {
-        this.code = code;
-        this.message = message || '';
-        this.result = result || '';
-    }
-}
+// 导入ET
+const ET = require('./ET');
 
 //最好提前对code进行明确的分类，这样到errorhandle的文件中进行更明确的条件判断区分
 

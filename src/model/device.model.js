@@ -53,7 +53,7 @@ const Device = seq.define('Device', {
         type: DataTypes.INTEGER(20),
         references: {
             model: Site,
-            key: id,
+            key: 'id',
         }
     }
 }, {

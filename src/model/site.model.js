@@ -49,11 +49,11 @@ const Site = seq.define('Site', {
 }
 );
 
-//User.sync() //- 如果表不存在,则创建该表(如果已经存在,则不执行任何操作)
+// Site.sync() //- 如果表不存在,则创建该表(如果已经存在,则不执行任何操作)
 
-// User.sync({ alter: true }) //- 这将检查数据库中表的当前状态(它具有哪些列,它们的数据类型等),然后在表中进行必要的更改以使其与模型匹配.
-// WO.sync({ force: true });
-console.log("site模型表刚刚(重新)创建！");
+// Site.sync({ alter: true }) //- 这将检查数据库中表的当前状态(它具有哪些列,它们的数据类型等),然后在表中进行必要的更改以使其与模型匹配.
+// Site.sync({ force: true });
+// console.log("site模型表刚刚(重新)创建！");
 
 module.exports = Site;
 

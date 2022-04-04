@@ -1,6 +1,5 @@
 const { getUserInfo, changebytel } = require('../service/user.service');
 const jwt = require('jsonwebtoken');
-// const app = require('../app');
 const { userDBError, userChangePWDError, userChangeMessageError, userGetMessageError} = require('../error/user.error');
 const { JWT_SECRET } = require('../config/config_default.js');
 

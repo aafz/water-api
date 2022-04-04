@@ -72,7 +72,7 @@ const Inspection = seq.define('Inspection', {
         type: DataTypes.INTEGER(20),
         references: {
             model: Site,
-            key: id,
+            key: 'id',
         }
     },
 }, {

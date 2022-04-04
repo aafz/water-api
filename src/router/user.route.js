@@ -26,4 +26,5 @@ router.get('/getMessage/:tel',(ctx,next)=>{
 router.patch('/changeMessage',auth,changeUserMessage);
 
 
-module.exports = router
+module.exports = router;
+// module.exports = router.routes()

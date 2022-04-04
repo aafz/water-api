@@ -52,7 +52,7 @@ const Alarm = seq.define('Alarm', {
         type: DataTypes.INTEGER(20),
         references: {
             model: Device,
-            key: id,
+            key: 'id',
         }
     },
 }, {
