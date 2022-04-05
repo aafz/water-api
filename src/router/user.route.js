@@ -17,13 +17,11 @@ router.patch('/changePWD',auth,pwdRight,changePWD);
 
 //获取用户信息接口
 // router.get('/getMessage',auth,getUserMessage);
-router.get('/getMessage/:tel',(ctx,next)=>{
-    console.log(ctx.params);
-    ctx.body = 'yes,you get it'
-});
+//使用auth中间件的话必须携带token，但是get方法。。。。。。
+router.get('/getMessage',auth,getUserMessage);     //带token
 
 //修改用户信息接口
-router.patch('/changeMessage',auth,changeUserMessage);
+router.patch('/changeMessage',auth,changeUserMessage);  //带token？
 
 
 module.exports = router;

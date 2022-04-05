@@ -38,14 +38,16 @@ const Site = seq.define('Site', {
         type: DataTypes.ENUM('一体化泵站', '污水处理站点'),
         comment: '站点类型'
     },
-    message: {
-        type: DataTypes.DATE(6),
-        allowNull: false,
-        comment: '站点上一次修改状态时间'
-    }
+    // updatetime: {
+    //     type: DataTypes.DATE(6),
+    //     allowNull: false,
+    //     comment: '站点上一次修改状态时间'
+    // }
 }, {
     tableName: 'sites',
-    timestamps: false
+    timestamps: true,
+    updatedAt: 'updatetime',
+    createdAt: false,
 }
 );
 
@@ -56,12 +58,3 @@ const Site = seq.define('Site', {
 // console.log("site模型表刚刚(重新)创建！");
 
 module.exports = Site;
-
-
-// // `sequelize.define` 会返回模型
-// console.log(User === sequelize.models.User); // true
-
-// User.sync() - 如果表不存在,则创建该表(如果已经存在,则不执行任何操作)
-// User.sync({ force: true }) - 将创建表,如果表已经存在,则将其首先删除
-// User.sync({ alter: true }) - 这将检查数据库中表的当前状态(它具有哪些列,它们的数据类型等),然后在表中进行必要的更改以使其与模型匹配.
-

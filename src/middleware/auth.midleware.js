@@ -4,15 +4,17 @@ const { JWT_SECRET } = require('../config/config_default.js');
 
 //验证token
 const auth = async (ctx, next) => {
-    const { authorization } = ctx.request.header;
-    const token = authorization.replace('Bearer ', '');
 
+    const { token } = ctx.request.header;  //从header中获取token
+    // console.log(token);
 
-    // console.log(ctx.request.header);
     try {
         var user = jwt.verify(token, JWT_SECRET);
 
+        //将user信息放入ctx.state中
         ctx.state.user = user;
+
+
     } catch (err) {
         // console.log(err.name);
         switch (err.name) {

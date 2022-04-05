@@ -10,6 +10,7 @@ const userInvalidPwd = new ET('10004','用户的密码错误/不匹配');
 const userChangePWDError = new ET('10005','用户密码更改失败');
 const userChangeMessageError = new ET('10006','用户信息更改失败');
 const userGetMessageError = new ET('10007','用户信息获取失败');
+const userTypeError = new ET('10008','用户类型错误');
 
 const authInvalidToken = new ET('10100','无效token');
 const authOverdueToken = new ET('10101','过期token');

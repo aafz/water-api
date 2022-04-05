@@ -6,7 +6,7 @@ const {
     woGetError,
     woGetPersonError,
 } = require('../error/wo.error');
-const WO = require('../model/wo.model');
+// const WO = require('../model/wo.model');
 
 //导入wo.service模块
 const {
@@ -15,7 +15,6 @@ const {
     addWO,
     updateWO
 } = require('../service/wo.service');
-
 
 // 对数据库的查询结果进行逻辑处理返回
 
@@ -29,20 +28,27 @@ class woControl {
     async addwo(ctx, next) {
         try {
             //解析传参
-            const {tel} = ctx.request.body;
+            const {
+                name,
+                level,
+                description,
+                site_id
+            
+            } = ctx.request.body;
             // console.log(params);
 
-            const WOobj={
-                    id: 0,
-                    name: 'test',
-                    level: '不急',
-                    status: '未派发',
-                    description: 'test11111111111111111111',
-                    site_id: 1234578,
-                    submitter_tel:tel
-                }
+            const tel = ctx.state.user.tel;
+
+            const WOobj = {
+                name: name,
+                level: level,
+                status: '未派发',
+                description: description,
+                site_id: site_id,
+                submitter_tel: tel
+            }
             const res = await addWO(WOobj); //到时候再加上添加工单的参数
-            // console.log('res:'+res);  //成功修改为1 失败为0
+            console.log('res:' + res); //成功修改为1 失败为0
 
             ctx.body = {
                 code: 0,
@@ -63,12 +69,13 @@ class woControl {
     async getwolist(ctx, next) {
         try {
             //解析传参
-            const {tel} = ctx.request.body;
-            console.log(ctx.request.body);
+            const tel = ctx.state.user.tel;
+
             const res = await getWOListByTel(tel);
+            console.log(res);
             ctx.body = {
                 code: 0,
-                message: '获取工单列表成功',
+                message: '获取个人工单列表成功',
                 result: res,
             }
         } catch (err) {
@@ -83,8 +90,10 @@ class woControl {
     async getwodetail(ctx, next) {
         try {
             //解析传参
-            const {id} = ctx.request.body;
-            console.log(ctx.request.body);
+            let url = ctx.request.url;
+            let id = url.slice('/');
+            id = id[id.length - 1];
+            //这个解析方法不好，后期改进
             const res = await getWODetail(id);
             ctx.body = {
                 code: 0,
@@ -103,9 +112,24 @@ class woControl {
     async changewo(ctx, next) {
         try {
             //解析传参
-            const {id,tel,mes} = ctx.request.body;
-            console.log(ctx.request.body);
-            const res = await updateWO(id,tel,mes);
+            const { id, message } = ctx.request.body;
+            const tel =ctx.state.user.tel;
+            
+            // console.log(id, message,tel);
+            //这里还可以在改进之前的解析参数方法
+
+            //这里暂时只用于提交工单，后期可以改进为更多的操作（派发等）
+            //这里的tel参数应该用于验证是否是当前工单的提交人
+
+            //派发的话就要先根据路由url判断是否派发或者提交然后来决定传参
+            //或者在updateWO里面做，但是这样不科学
+            //再想想。。。。。
+
+            const status = '已处理';
+            // console.log(`id:${id} tel:${tel} mes:${message}`);
+
+            const res = await updateWO(id, message, status, tel);
+            // console.log('ghjkllcxzxchjkl');
             ctx.body = {
                 code: 0,
                 message: '修改工单成功',

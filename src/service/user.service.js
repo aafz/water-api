@@ -39,6 +39,15 @@ class userService {
         return res
     };
 
+    //获取个人用户类型
+    async getUserType(user_tel){
+        const res = await User.findOne({
+            attributes: ['type'],
+            where: { tel: user_tel }
+        });
+        return res.type
+    }
+
 
     //将修改信息和修改密码合并
     //以下有两个方案：

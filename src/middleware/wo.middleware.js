@@ -9,16 +9,21 @@ const {
     woGetError, //获取工单详情失败
 } = require('../error/wo.error');
 
-//验证工单存在
+
+//验证工单存在 
 const woexist = async (ctx, next) => {
+
+    //获取参数
     const { id } = ctx.request.body;
+
     const res = await getWODetail(id);
-    console.log(`wo.middleware.js:${res}`);
 
     try {
-        if (!res) {//res没有返回数据
-            console.error('工单不存在', { id });
-            ctx.app.emit('error', woNotExistError , ctx);
+        if (!res) { //res没有返回数据
+            console.error('工单不存在', {
+                id
+            });
+            ctx.app.emit('error', woNotExistError, ctx);
             return
         }
     } catch (err) {
