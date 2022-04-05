@@ -32,7 +32,7 @@ const auth = async (ctx, next) => {
         }
         return
     }
-
+    // console.log('auth success');
     await next();
 }
 
