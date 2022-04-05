@@ -3,30 +3,6 @@ const User = require('../model/user.model');
 //SQL语句转化部分
 
 class userService {
-
-    //获取密码   可以不用了,直接合到信息获取上
-    // async getPwd(user_tel) {
-
-    //     //     await User.create({ 
-    //     //         tel: '1234567891234', 
-    //     //         name: "Jane" ,
-    //     //         password:'123456',
-    //     //         sex:'男',
-    //     //         wx:'123454878',
-    //     //         type:'测试人员',
-
-    //     //     });
-
-    //     // console.log(user_tel);
-    //     // console.log(User);
-    //     const res = await User.findOne({
-    //         attributes: ['password'],
-    //         where: { tel: user_tel }
-    //     })
-    //     // console.log(res);
-    //     return res.password
-    // };
-
     
     //获取个人信息 (包括密码)
     async getUserInfo(user_tel) {
