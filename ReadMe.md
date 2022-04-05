@@ -30,3 +30,9 @@
 ![image-20220323152031358](C:\Users\aafz\AppData\Roaming\Typora\typora-user-images\image-20220323152031358.png)
 
 ![image-20220323152054875](C:\Users\aafz\AppData\Roaming\Typora\typora-user-images\image-20220323152054875.png)
+
+
+
+## 学习笔记2：
+
+##### 22.4.5	基本完成了数据的传递功能，中间件之后再添加，还有许多需要完成的中间件，工具类，各种抽离的代码部分
