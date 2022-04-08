@@ -31,7 +31,7 @@ const router = new Router({ prefix: '/wo' });
 router.post('/addWO', auth,userExisted,addwo);
 
 //修改  //提交工单和分派工单都可以用   判断工单存在 修改工单 3.//tel从token中取值
-router.patch('/changeWO', auth,woexist,changewo);
+router.post('/changeWO', auth,woexist,changewo);
 
 //获取单项工单详情      1.判断工单存在  2.工单处理人是否为当前用户  3.操作数据库获取工单详情
 //************************************2.管理员的话那岂不是全部工单都要看？

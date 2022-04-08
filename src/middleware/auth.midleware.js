@@ -20,13 +20,22 @@ const auth = async (ctx, next) => {
         switch (err.name) {
             case 'JsonWebTokenError':
                 console.error('无效token', err);
+                ctx.status = 401;
+                ctx.body=authInvalidToken;
                 ctx.app.emit('error',authInvalidToken,ctx);
                 return
             case 'TokenExpiredError':
                 console.error('token已过期', err);
+                ctx.status = 401;
+                ctx.body=authOverdueToken;
                 ctx.app.emit('error',authOverdueToken,ctx);
                 return
             case 'NotBeforeError':
+                ctx.status = 500;
+                ctx.body={
+                    code:-1,
+                    msg:'服务器错误'
+                };
                 console.error('？？？？', err);
                 return
         }

@@ -25,6 +25,6 @@ router.get('/getSiteList',getsitelist);
 router.get('/getSiteDetail/:id',getsitedetail);
 
 //修改站点状态（测试人员专享） //根据token判断是否为测试人员    // 判断站点存在   //修改站点状态
-router.patch('/changeSiteStatus',auth,IsTester,changesitestatus); //带token
+router.post('/changeSiteStatus',auth,IsTester,changesitestatus); //带token
 
 module.exports = router;

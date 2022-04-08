@@ -16,7 +16,9 @@ const loginNotNull = async (ctx, next) => {
     //合法性
     if (!tel || !password) {
         console.error('tel和password为空', ctx.request.body);
-        ctx.app.emit('error', userFormateError, ctx)
+        ctx.status = 400;
+        ctx.body = userFormateError;
+        // ctx.app.emit('error', userFormateError, ctx)
         return
     }
 
@@ -28,41 +30,58 @@ const userExisted = async (ctx, next) => {
     //验证用户
 
     //从token中获取用户tel
-    const tel = ctx.state.user.tel;
-    console.log(tel);
+    // const tel = ctx.state.user.tel||ctx.request.body.tel;
+    // let tel;
+    // console.log(ctx.request.url.indexOf('/login')!=-1);
+    // if (ctx.request.url.indexOf('/login') != -1) {
+    //     tel = ctx.request.body.tel;
+    // } else {
+    //     tel = ctx.state.user.tel;
+    // }
+
+    const {tel} = ctx.state.user||ctx.request.body;
+
+    // console.log(tel);
 
     const res = await getUserInfo(tel);
 
-    try {
-        if (!res) {//res没有返回数据
-            console.error('用户不存在', { tel });
-            ctx.app.emit('error', userNotExit, ctx);
-            return
-        }
-    } catch (err) {
-        console.error(err)
-        ctx.app.emit('error', userLoginError, ctx);
+
+    if (!res) {//res没有返回数据
+        console.error('用户不存在', { tel });
+        ctx.status = 400;
+        ctx.body = userNotExit;
+        // ctx.app.emit('error', userNotExit, ctx);
         return
-    }
+    } 
+    // else {
+    //     ctx.status = 500;
+    //     ctx.body = userLoginError;
+    //     ctx.app.emit('error', userLoginError, ctx);
+    //     return
+    // }
 
     await next();
 }
 
 //密码正确匹配
 const pwdRight = async (ctx, next) => {
-    const { tel, password } = ctx.request.body;
+    //登录与其他方法不一样，没有token，所以不能用ctx.state.user
+    const {tel} = ctx.state.user||ctx.request.body;
+    const { password } = ctx.request.body;
     const res = await getUserInfo(tel);
-    try {
-        if (password != res.password) {
-            console.error('用户账号和密码不匹配/密码错误', { password });
-            ctx.app.emit('error', userInvalidPwd, ctx)
-            return
-        }
-    } catch (err) {
-        console.error(err);
-        ctx.app.emit('error', userLoginError, ctx);
+
+    if (password != res.password) {
+        ctx.status = 400;
+        ctx.body = userInvalidPwd;
+        console.error('用户账号和密码不匹配/密码错误', { password });
         return
     }
+    // } else {
+    //     ctx.status = 500;
+    //     ctx.body = userLoginError;
+    //     ctx.app.emit('error', userLoginError, ctx);
+    //     return
+    // };
     await next();
 };
 
@@ -94,7 +113,7 @@ const IsAdmin = async (ctx, next) => {
     const userType = await getUserType(tel);
     // console.log(userType);
     //判断人员类型是否为管理员
-    if (userType === '管理员') {    
+    if (userType === '管理员') {
         await next();
     } else {
         console.error('用户不是管理员', { userType });

@@ -7,7 +7,8 @@ const {
     userDBError,
     userChangePWDError,
     userChangeMessageError,
-    userGetMessageError
+    userGetMessageError,
+    userLoginError,
 } = require('../error/user.error');
 const {
     JWT_SECRET
@@ -16,42 +17,30 @@ const {
 // 对数据库的查询结果进行逻辑处理返回
 
 class userControl {
+
     async login(ctx, next) {
-        // 1.获取请求传来的数据
-        const {
-            tel
-        } = ctx.request.body;
-        // 1.5 检查数据合法性  已经抽离成中间件出去了
-
-        // 2.操作数据库
-
+        const { tel } = ctx.request.body;
+        let res;
         try {
-            const res = await getUserInfo(tel);
-
+           res = await getUserInfo(tel);
+        } catch (err) {
+            console.error('用户登录失败'); //这些重复报错太多的，老子迟早抽掉它
+            ctx.status = 500;
+            ctx.body = userLoginError;
+            ctx.app.emit('error', userLoginError, ctx);
+            return
+        }
             // 3.返回执行数据库的结果并进行判断    //已经抽到中间件去了
-
             // 4.颁发token
-            // console.log(res);
-            const {
-                password,
-                ...userInfo
-            } = res.dataValues;
-
+            const { password, ...userInfo } = res.dataValues;
             ctx.body = { //老子迟早把这些对象抽离出去
                 code: 0,
                 message: '用户登录成功',
                 result: {
-                    token: jwt.sign(userInfo, JWT_SECRET, {
-                        expiresIn: '5h'
-                    })
+                    token: jwt.sign(userInfo, JWT_SECRET, { expiresIn: '2h' })
                 }
             }
 
-        } catch (err) {
-            console.error('用户登录失败'); //这些重复报错太多的，老子迟早抽掉它
-            ctx.app.emit('error', userLoginError, ctx);
-            return
-        }
         await next();
     }
 
